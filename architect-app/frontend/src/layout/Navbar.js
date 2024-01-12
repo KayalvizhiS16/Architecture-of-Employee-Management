@@ -1,20 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext, useState } from "react";
 import { Button } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 const Navbar = (props) => {
   const [menu, setMenu] = useState(false);
   
 
-  const navLinks = [
-    {
-      name: "Employees",
-      to: "/employees",
-    },
-    {
-      name: "Hierachy",
-      to: "/hierachy",
-    },
-  ];
+  // const navLinks = [
+  //   {
+  //     name: "Employee",
+  //     to: "/employee",
+  //   },
+  //   {
+  //     name: "Hierachy",
+  //     to: "/hierachy",
+  //   },
+  // ];
   return (
     <nav className="bg-cyan-400 w-full sticky top-0 z-50 flex justify-between items-center py-3 shadow-sm ">
       <a href="/" className="flex items-center mx-4">
@@ -23,27 +24,27 @@ const Navbar = (props) => {
           className="w-10 h-10"
           alt="Interns"
         />
-        <span className="text-2xl font-semibold ">ARCHITECT OF</span>
+        {/* <span className="text-2xl font-semibold ">ARCHITECT OF</span> */}
         <span className="text-blue-500 text-2xl mx-1">EMPLOYEE MANAGEMENT</span>
       </a>
 
       <div>
           <div>
             <ul className="list-none md:flex hidden justify-end items-center flex-1 mx-4 ">
-              {navLinks.length > 0
+              {/* {navLinks.length > 0
                 ? navLinks.map((data, index) => (
                     <li key={index} className="m-2 font-semibold ">
                       <a href={data.to}>{data.name}</a>
                     </li>
                   ))
-                : "No link found"}
+                : "No link found"} */}
 
               <li>
                 <h1 className="mx-3 text-red-500 font-semibold bg-white rounded-md">Welcome</h1>
               </li>
               <li className="md:mx-3 my-2">
                 <Button
-                  variant="contained"
+                  variant="outlined"
                   color="error"
                  
                 >
@@ -61,7 +62,8 @@ const Navbar = (props) => {
                   <Button
                     variant="contained"
                     color="primary"
-                   
+                    LinkComponent={Link}
+                    to="/login"
                   >
                  Log In
                   </Button>
@@ -70,7 +72,9 @@ const Navbar = (props) => {
                   <Button
                     variant="contained"
                     color="secondary"
-                   
+                    LinkComponent={Link}
+                    to="/register"
+                  
                   >
                    Register
                   </Button>
@@ -96,13 +100,13 @@ const Navbar = (props) => {
              
                 <div>
                   <ul className="list-none flex flex-col justify-end items-center flex-1 mx-4 ">
-                    {navLinks.length > 0
+                    {/* {navLinks.length > 0
                       ? navLinks.map((data, index) => (
                           <li key={index} className="m-2 font-semibold">
                             <a href={data.to}>{data.name}</a>
                           </li>
                         ))
-                      : "No link found"}
+                      : "No link found"} */}
 
                     <li className="md:mx-3 my-2">
                       <h1 className="my-3 text-red-500 font-semibold bg-white rounded-md">Welcome</h1>
@@ -113,7 +117,7 @@ const Navbar = (props) => {
                     </li>
                     <li className="md:mx-3 my-2">
                       <Button
-                        variant="contained"
+                        variant="outlined"
                         color="error"
                        
                       >

@@ -1,0 +1,286 @@
+import React, { useState, useEffect } from "react";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-quartz.css";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+
+const Employee = () => {
+  const [rowData, setRowData] = useState([
+    {
+        Emp_Id: 101,
+        Emp_name: "John Doe",
+        Role: "Developer",
+        Email: "john.doe@example.com",
+        Active: true
+      },
+      {
+        Emp_Id: 102,
+        Emp_name: "Jane Smith",
+        Role: " Developer",
+        Email: "jane.smith@example.com",
+        Active: false
+      },
+      {
+        Emp_Id: 103,
+        Emp_name: "Bob Johnson",
+        Role: "Developer",
+        Email: "bob.johnson@example.com",
+        Active: true
+      },
+      {
+        Emp_Id: 104,
+        Emp_name: "Alice Brown",
+        Role: "Developer",
+        Email: "alice.brown@example.com",
+        Active: true
+      },
+      {
+        Emp_Id: 105,
+        Emp_name: "Charlie Davis",
+        Role: "Developer",
+        Email: "charlie.davis@example.com",
+        Active: false
+      },
+      {
+        Emp_Id: 106,
+        Emp_name: "Eva Wilson",
+        Role: "Developer",
+        Email: "eva.wilson@example.com",
+        Active: true
+      },
+      {
+        Emp_Id: 107,
+        Emp_name: "David Miller",
+        Role: "Manager",
+        Email: "david.miller@example.com",
+        Active: false
+      },
+      {
+        Emp_Id: 108,
+        Emp_name: "Grace Taylor",
+        Role: "Manager",
+        Email: "grace.taylor@example.com",
+        Active: true
+      },
+      {
+        Emp_Id: 109,
+        Emp_name: "Frank Martinez",
+        Role: "Team Lead",
+        Email: "frank.martinez@example.com",
+        Active: true
+      },
+      {
+        Emp_Id: 110,
+        Emp_name: "Helen Johnson",
+        Role: "Developer",
+        Email: "helen.johnson@example.com",
+        Active: false
+      },
+      {
+        Emp_Id: 111,
+        Emp_name: "Jack Turner",
+        Role: "Developer",
+        Email: "jack.turner@example.com",
+        Active: true
+      },
+      {
+        Emp_Id: 112,
+        Emp_name: "Karen White",
+        Role: "Developer",
+        Email: "karen.white@example.com",
+        Active: false
+      },
+      {
+        Emp_Id: 113,
+        Emp_name: "Leonard Clark",
+        Role: "Developer",
+        Email: "leonard.clark@example.com",
+        Active: true
+      },
+      {
+        Emp_Id: 114,
+        Emp_name: "Megan Harris",
+        Role: "Developer",
+        Email: "megan.harris@example.com",
+        Active: false
+      },
+      {
+        Emp_Id: 115,
+        Emp_name: "Oscar Turner",
+        Role: "Developer",
+        Email: "oscar.turner@example.com",
+        Active: true
+      },
+      {
+        Emp_Id: 116,
+        Emp_name: "Pamela Brown",
+        Role: "Developer",
+        Email: "pamela.brown@example.com",
+        Active: true
+      },
+      {
+        Emp_Id: 117,
+        Emp_name: "Quincy Adams",
+        Role: "Developer",
+        Email: "quincy.adams@example.com",
+        Active: false
+      },
+      {
+        Emp_Id: 118,
+        Emp_name: "Rachel Green",
+        Role: "Developer",
+        Email: "rachel.green@example.com",
+        Active: true
+      },
+      {
+        Emp_Id: 119,
+        Emp_name: "Samuel Taylor",
+        Role: "Team Lead",
+        Email: "samuel.taylor@example.com",
+        Active: false
+      },
+      {
+        Emp_Id: 120,
+        Emp_name: "Tina Turner",
+        Role: "Developer",
+        Email: "tina.turner@example.com",
+        Active: true
+      }
+  ]);
+
+  const [managerOptions, setManagerOptions] = useState([]);
+  const [teamLeadOptions, setTeamLeadOptions] = useState([]);
+  const [selectedRole, setSelectedRole] = useState("");
+  const [selectedManager, setSelectedManager] = useState("");
+  const [selectedTeamLead, setSelectedTeamLead] = useState("");
+
+  useEffect(() => {
+    // Extract unique manager and team lead names from the table
+    const managers = [
+      ...new Set(
+        rowData
+          .filter((employee) => employee.Role === "Manager")
+          .map((employee) => employee.Emp_name)
+      ),
+    ];
+    const teamLeads = [
+      ...new Set(
+        rowData
+          .filter((employee) => employee.Role === "Team Lead")
+          .map((employee) => employee.Emp_name)
+      ),
+    ];
+
+    setManagerOptions(managers);
+    setTeamLeadOptions(teamLeads);
+  }, [rowData]);
+
+  const handleRoleChange = (event) => {
+    setSelectedRole(event.target.value);
+  };
+
+  const handleManagerChange = (event) => {
+    setSelectedManager(event.target.value);
+  };
+
+  const handleTeamLeadChange = (event) => {
+    setSelectedTeamLead(event.target.value);
+  };
+
+  const emp_details = () => {
+    // Filter employees based on the selected role
+    return rowData.filter((employee) => employee.Role === selectedRole);
+  };
+
+  // Column Definitions: Defines & controls grid columns.
+  const [colDefs, setColDefs] = useState([
+    { field: "Emp_name" },
+    { field: "Emp_Id" },
+    { field: "Role" },
+    { field: "Email" },
+    { field: "Active" },
+  ]);
+
+  return (
+    <div className="ag-theme-quartz" style={{ height: 400 }}>
+      <div className="my-3 mx-56">
+        <FormControl>
+          <InputLabel id="manager-label">Manager</InputLabel>
+          <Select
+            labelId="manager-label"
+            id="manager-select"
+            value={selectedManager}
+            label="Manager"
+            sx={{ width: 300 }}
+            onChange={handleManagerChange}
+          >
+            {managerOptions.map((manager) => (
+              <MenuItem key={manager} value={manager}>
+                {manager}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
+      <div className="my-3 mx-56">
+        <FormControl>
+          <InputLabel id="team-lead-label">Team Lead</InputLabel>
+          <Select
+            labelId="team-lead-label"
+            id="team-lead-select"
+            value={selectedTeamLead}
+            label="Team Lead"
+            sx={{ width: 300 }}
+            onChange={handleTeamLeadChange}
+          >
+            {teamLeadOptions.map((teamLead) => (
+              <MenuItem key={teamLead} value={teamLead}>
+                {teamLead}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
+      <div className="my-3 mx-56">
+        <FormControl>
+          <InputLabel id="role-label">Role</InputLabel>
+          <Select
+            labelId="role-label"
+            id="role-select"
+            value={selectedRole}
+            label="Role"
+            sx={{ width: 300 }}
+            onChange={handleRoleChange}
+          >
+            <MenuItem value="Developer">Developer</MenuItem>
+            <MenuItem value="Manager">Manager</MenuItem>
+            <MenuItem value="Team Lead">Team Lead</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
+      {selectedRole === "Developer" && (
+        <div className="my-3 mx-56">
+          <Autocomplete
+            disablePortal
+            id="developers-combo-box"
+            options={rowData
+              .filter((employee) => employee.Role === "Developer")
+              .map((employee) => employee.Emp_name)}
+            sx={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} label="Developers" />
+            )}
+          />
+        </div>
+      )}
+      <AgGridReact rowData={emp_details()} columnDefs={colDefs} />
+    </div>
+  );
+};
+
+export default Employee;
